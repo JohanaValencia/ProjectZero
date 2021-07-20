@@ -3,28 +3,34 @@ package com.example.model;
 public class Transaction {
 
 	private int transId;
-	private int accountId;
-	private String accountNumber;	
-	private double postBalance;
+	private int accountSen;
+	private int accountRec;	
+	private double balanceSen;
+	private double balanceRec;
+	private double transactionAmount;
 	
 	
 	public Transaction() {
 		
 	}
 	
-	public Transaction(int id, int accountId, String accountNumber, double balance) {
-		this.transId=id;
-		this.accountId=accountId;
-		this.accountNumber=accountNumber;
-		this.postBalance= balance;
+	public Transaction(int id, int accountSen, int accountRec, double balanceSen, double balanceRec, double transactionAmount) {
+		this.transId = id;
+		this.accountSen = accountSen;
+		this.accountRec = accountRec;
+		this.balanceSen = balanceSen;
+		this.balanceRec = balanceRec;
+		this.transactionAmount = transactionAmount;
 	}
 	
-	public Transaction (int accountId, String accountNumber, double balance) {
-		this.accountId=accountId;
-		this.accountNumber=accountNumber;
-		this.postBalance= balance;
+	public Transaction(int accountSen, int accountRec, double balanceSen, double balanceRec, double transactionAmount) {
+		this.accountSen = accountSen;
+		this.accountRec = accountRec;
+		this.balanceSen = balanceSen;
+		this.balanceRec = balanceRec;
+		this.transactionAmount = transactionAmount;
 	}
-	
+
 	public int getTransId() {
 		return transId;
 	}
@@ -33,44 +39,52 @@ public class Transaction {
 		this.transId = transId;
 	}
 
-	public int getAccountId() {
-		return accountId;
+	public int getAccountSen() {
+		return accountSen;
 	}
 
-	public void setAccountId(int accountId) {
-		this.accountId = accountId;
+	public void setAccountSen(int accountSen) {
+		this.accountSen = accountSen;
 	}
 
-	public String getAccountNumber() {
-		return accountNumber;
+	public int getAccountRec() {
+		return accountRec;
 	}
 
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
+	public void setAccountRec(int accountRec) {
+		this.accountRec = accountRec;
 	}
 
-	public double getPostBalance() {
-		return postBalance;
+	public double getBalanceSen() {
+		return balanceSen;
 	}
 
-	public void setPostBalance(double postBalance) {
-		this.postBalance = postBalance;
+	public void setBalanceSen(double balanceSen) {
+		this.balanceSen = balanceSen;
 	}
 
-	public void deposit(double amount) {
-		postBalance = postBalance + amount;
+	public double getBalanceRec() {
+		return balanceRec;
 	}
-	
-	public void withdraw(double amount) {
-		postBalance = postBalance - amount;
+
+	public void setBalanceRec(double balanceRec) {
+		this.balanceRec = balanceRec;
+	}
+
+	public double getTransactionAmount() {
+		return transactionAmount;
+	}
+
+	public void setTransactionAmount(double transactionAmount) {
+		this.transactionAmount = transactionAmount;
 	}
 
 	@Override
 	public String toString() {
-		return "Transaction [transId=" + transId + ", accountId=" + accountId + ", accountNumber=" + accountNumber
-				+ ", postBalance=" + postBalance + "]";
+		return "Transaction [transId=" + transId + ", accountSen=" + accountSen + ", accountRec=" + accountRec
+				+ ", balanceSen=" + balanceSen + ", balanceRec=" + balanceRec + ", transactionAmount="
+				+ transactionAmount + "]";
 	}
-	
 	
 	
 }

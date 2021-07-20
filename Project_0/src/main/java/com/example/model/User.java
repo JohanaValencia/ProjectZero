@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class Customer {
+public class User {
 
 	private int id;
 	private String firstName;
@@ -15,11 +15,11 @@ public class Customer {
 	private String password;
 	private List<Account> accounts; 
 	
-	public Customer() {
+	public User() {
 		accounts = new ArrayList<Account>();
 	}
 	//Theoratically may not be needed
-	public Customer(int id, String firstName, String lastName, String email, String password) {
+	public User(int id, String firstName, String lastName, String email, String password) {
 		super();
 		this.id=id;
 		this.firstName=firstName;
@@ -30,7 +30,7 @@ public class Customer {
 		this.accounts= new ArrayList<Account>();		
 	}
 	//Used to send user info to the database because the db auto generates the id
-	public Customer(String firstName, String lastName, String email, String password) {
+	public User(String firstName, String lastName, String email, String password) {
 		super();
 		this.firstName=firstName;
 		this.lastName=lastName;
@@ -41,7 +41,7 @@ public class Customer {
 	}
 	
 	//User to get info from the database
-	public Customer(int id, String firstName, String lastName,String username,  String email, String password) {
+	public User(int id, String firstName, String lastName,String username,  String email, String password) {
 		super();
 		this.id=id;
 		this.firstName=firstName;
@@ -107,11 +107,13 @@ public class Customer {
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
+	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
 				+ ", email=" + email + ", password=" + password + ", accounts=" + accounts + "]";
 	}
+
 
 	
 }

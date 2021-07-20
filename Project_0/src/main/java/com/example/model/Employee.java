@@ -1,7 +1,5 @@
 package com.example.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Employee {
@@ -11,7 +9,6 @@ public class Employee {
 	private String lastName;
 	private String eUsername;
 	private String ePassword;
-	private List<Account> accounts; 
 	
 	
 	public Employee() {
@@ -32,7 +29,6 @@ public class Employee {
 		this.lastName = lastName;
 		this.eUsername = firstName+ lastName+ (new Random().nextInt(9000)+1000);
 		this.ePassword = password;
-		this.accounts= new ArrayList<Account>();
 	}
 	
 	public Employee(int id, String firstName, String lastName,String username, String password) {
@@ -41,7 +37,6 @@ public class Employee {
 		this.lastName=lastName;
 		this.eUsername= username;
 		this.ePassword=password;
-		this.accounts= new ArrayList<Account>();
 	}
 
 	public int getId() {
@@ -84,20 +79,11 @@ public class Employee {
 		this.ePassword = ePassword;
 	}
 
-	public List<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
-	}
-
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", eUsername=" + eUsername
-				+ ", ePassword=" + ePassword + ", accounts=" + accounts + "]";
+				+ ", ePassword=" + ePassword + "]";
 	}
-	
-	
+
 	
 }

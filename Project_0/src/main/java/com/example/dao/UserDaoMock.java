@@ -3,7 +3,7 @@ package com.example.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.model.User;
+import com.example.models.User;
 
 public class UserDaoMock implements UserDao{
 	

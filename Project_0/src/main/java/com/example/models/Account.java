@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.models;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,26 +14,26 @@ public class Account {
 		transactions = new ArrayList<Transaction>();
 
 	}
-
+	
 	public Account(int accountId, int accountBalance) {
 		this.accountId = accountId;
-		this.accountBalance = accountBalance;
 		this.accountNumber = 100000000 + new Random().nextInt(900000000);
+		this.accountBalance = accountBalance;
 		this.transactions = new ArrayList<Transaction>();
-
+		
 	}
-
+	
+	
 	public Account(int accountBalance) {
-		this.accountBalance = accountBalance;
 		this.accountNumber = 100000000 + new Random().nextInt(900000000);
+		this.accountBalance = accountBalance;
 		this.transactions = new ArrayList<Transaction>();
 	}
-
-	public Account(int accountId, int accountBalance, int accountNumber) {
+	
+	public Account(int accountId, int accountNumber, int accountBalance) {
 		this.accountId = accountId;
-		this.accountBalance = accountBalance;
-		this.accountNumber=accountNumber;
-		this.transactions= new ArrayList<Transaction>();
+		this.accountNumber = accountNumber;
+		this.transactions = new ArrayList<Transaction>();
 	}
 
 	public int getAccountId() {
@@ -74,4 +74,6 @@ public class Account {
 				+ accountBalance + ", transactions=" + transactions + "]";
 	}
 	
+	
 }
+	

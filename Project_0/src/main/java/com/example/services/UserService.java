@@ -1,12 +1,13 @@
 package com.example.services;
 
+
 import java.sql.SQLException;
 import com.example.dao.UserDao;
 import com.example.exceptions.InvalidCredentialsException;
 import com.example.exceptions.UserDoesNotExistException;
 import com.example.exceptions.UserNameAlreadyExistsException;
 import com.example.logging.Logging;
-import com.example.model.User;
+import com.example.models.User;
 
 public class UserService {
 	

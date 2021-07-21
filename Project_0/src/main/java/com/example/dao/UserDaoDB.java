@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.model.User;
+import com.example.models.User;
 import com.example.utils.ConnectionUtil;
 
 public class UserDaoDB implements UserDao{

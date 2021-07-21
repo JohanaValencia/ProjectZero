@@ -1,110 +1,135 @@
 package com.example.dao;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Statement;
 
-import com.example.model.Account;
-import com.example.model.AccountDisplay;
-import com.example.model.User;
+import com.example.models.Account;
 import com.example.utils.ConnectionUtil;
 
 public class AccountDaoDB implements AccountDao{
-
+	
 	private ConnectionUtil conUtil = ConnectionUtil.getConnectionUtil();
 
 	@Override
-	public void createAccount(Account a) {
+	public void createAccount(Account a) throws SQLException {
 		try {
 			Connection con = conUtil.getConnection();
 			con.setAutoCommit(false);
-			String sql = "call create_account(?,?)";
-			CallableStatement cs = con.prepareCall(sql);
+			String sql="INSERT INTO account(account_number, account_balance) values"
+					+ "(?,?)";
+			PreparedStatement ps = con.prepareStatement(sql);
 			
-			cs.setInt(1, a.getAccountNumber());
-			cs.setInt(2, a.getAccountBalance());
+			ps.setInt(1, a.getAccountNumber());
+			ps.setInt(2, a.getAccountBalance());
 			
-			cs.execute();
+			ps.execute();
 			
-			con.setAutoCommit(true);
-			
-		}catch(Exception e) {
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
-	public List<AccountDisplay> getAllAccounts() {
-		
-		List<AccountDisplay> aList = new ArrayList<AccountDisplay>();
-		
+	public void updateAccount(Account a) {
+
 		try {
 			Connection con = conUtil.getConnection();
-			con.setAutoCommit(false);
+			String sql = "UPDATE accounts SET account_number = ?, account_balance = ?"
+					+ "WHERE accounts.id = ?";
 			
-			String sql = "{}?=call get_all_accounts()";
+			PreparedStatement ps = con.prepareStatement(sql);
 			
-			CallableStatement cs = con.prepareCall(sql);
+			ps.setInt(1, a.getAccountNumber());
+			ps.setInt(2, a.getAccountBalance());
+			ps.setInt(3,a.getAccountId());
 			
-			cs.registerOutParameter(1, Types.OTHER);
+			ps.execute();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void deleteAccount(Account a) {
+
+		try {
+			Connection con = conUtil.getConnection();
+			String sql = "DELETE FROM accounts WHERE accounts.account_id = ?";
+					PreparedStatement ps = con.prepareStatement(sql);
+					
+					ps.setInt(1,a.getAccountId());
+					
+					ps.execute();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void depositUserAmount(Account a) {
+
+		try {
+			Connection con = conUtil.getConnection();
+			String sql = "UPDATE accounts SET account_balance =account_balance+? WHERE account_number= ?";
 			
-			cs.execute();
+			PreparedStatement ps = con.prepareStatement(sql);
 			
-			ResultSet rs = (ResultSet) cs.getObject(1);
+			ps.setInt(1, a.getAccountId());
+			ps.setInt(2,a.getAccountBalance());
+			
+			ps.execute();
+			
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void withdrawUserAmount(Account a) {
+
+		try {
+			Connection con = conUtil.getConnection();
+			String sql = "UPDATE accounts SET account_balance =account_balance-? WHERE account_number= ?";
+			
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, a.getAccountId());
+			ps.setInt(2, a.getAccountBalance());
+			
+			ps.execute();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Account getAccountByAccountNum(int accountNumber) {
+		Account account = new Account();
+		try {
+			Connection con = conUtil.getConnection();
+			
+			String sql ="SELECT * FROM accounts WHERE accounts.account_number= " + accountNumber;
+			
+			Statement s = con.createStatement();
+			ResultSet rs = s.executeQuery(sql);
 			
 			while(rs.next()) {
-				AccountDisplay account = new AccountDisplay(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
-				aList.add(account);
+				account.setAccountId(rs.getInt(1));
+				account.setAccountNumber(rs.getInt(2));
+				account.setAccountBalance(rs.getInt(3));
 			}
+			return account;
 			
-			con.setAutoCommit(true);
-			return aList;
-			
-		} catch(SQLException e) {
+		} catch(SQLException e){
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	@Override
-	public User getUsersAccounts(User u) {
-
-		List<Account> accounts = new ArrayList<Account>();
-		
-		try {
-			Connection con = conUtil.getConnection();
-			con.setAutoCommit(false);
-			String sql = "{?=call get_user_accounts(?)}";
-			
-			CallableStatement cs = con.prepareCall(sql);
-			
-			cs.registerOutParameter(1, Types.OTHER);
-			cs.setInt(2,  u.getId());
-			
-			cs.execute();
-			
-			ResultSet rs = (ResultSet) cs.getObject(1);
-			
-			while(rs.next()){
-				Account a = new Account(rs.getInt(1), rs.getInt(2), rs.getInt(3));
-				accounts.add(a);
-			}
-			
-			u.setAccounts(accounts);
-			
-			con.setAutoCommit(true);
-			return u;			
-			
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-		
+	
 }

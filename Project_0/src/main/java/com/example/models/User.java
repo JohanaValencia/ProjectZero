@@ -1,9 +1,8 @@
-package com.example.model;
+package com.example.models;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 
 public class User {
 
@@ -13,43 +12,47 @@ public class User {
 	private String username;
 	private String email;
 	private String password;
-	private List<Account> accounts; 
-	
+	private List<Account> accounts;
+	private List<User> users;
+
 	public User() {
 		accounts = new ArrayList<Account>();
+		users =new ArrayList<User>();
 	}
-	//Theoratically may not be needed
+
+	// Theoratically may not be needed
 	public User(int id, String firstName, String lastName, String email, String password) {
 		super();
-		this.id=id;
-		this.firstName=firstName;
-		this.lastName=lastName;
-		this.username= firstName+ lastName+ (new Random().nextInt(9000)+1000);
-		this.email=email;
-		this.password=password;
-		this.accounts= new ArrayList<Account>();		
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = firstName + lastName + (new Random().nextInt(9000) + 1000);
+		this.email = email;
+		this.password = password;
+		this.accounts = new ArrayList<Account>();
 	}
-	//Used to send user info to the database because the db auto generates the id
+
+	// Used to send user info to the database because the db auto generates the id
 	public User(String firstName, String lastName, String email, String password) {
 		super();
-		this.firstName=firstName;
-		this.lastName=lastName;
-		this.username= firstName+ lastName+ (new Random().nextInt(9000)+1000);
-		this.email=email;
-		this.password=password;
-		this.accounts= new ArrayList<Account>();		
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = firstName + lastName + (new Random().nextInt(9000) + 1000);
+		this.email = email;
+		this.password = password;
+		this.accounts = new ArrayList<Account>();
 	}
-	
-	//User to get info from the database
-	public User(int id, String firstName, String lastName,String username,  String email, String password) {
+
+	// User to get info from the database
+	public User(int id, String firstName, String lastName, String username, String email, String password) {
 		super();
-		this.id=id;
-		this.firstName=firstName;
-		this.lastName=lastName;
-		this.username= username;
-		this.email=email;
-		this.password=password;
-		this.accounts= new ArrayList<Account>();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.accounts = new ArrayList<Account>();
 	}
 
 	public int getId() {
@@ -107,13 +110,22 @@ public class User {
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
-	
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ ", email=" + email + ", password=" + password + ", accounts=" + accounts + "]";
+				+ ", email=" + email + ", password=" + password + ", accounts=" + accounts + ", users=" + users + "]";
 	}
 
+	
 
 	
 }

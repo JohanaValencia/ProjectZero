@@ -24,9 +24,9 @@ public interface AccountDao {
 			
 	void createAccount(Account a) throws SQLException;
 	
-	void updateAccount(Account a);
+	void updateAccount(Account a) throws SQLException;
 	
-	void deleteAccount(Account a);
+	void deleteAccount(Account a) throws SQLException;
 	
 	public void withdrawUserAmount(Account a);
 
@@ -37,6 +37,9 @@ public interface AccountDao {
 	void addTransactionAmount(Account a);
 	
 	Account viewAccount(int accountNumber);
+
+	//void withdrawAccount(Account a) throws SQLException;
+
 	
 	//Account viewAccountByUser(User u);
 

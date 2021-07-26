@@ -8,6 +8,7 @@ import java.util.List;
 import com.example.dao.AccountDao;
 import com.example.exceptions.AccountAlreadyExistsException;
 import com.example.exceptions.InvalidAccountException;
+import com.example.exceptions.InvalidAmountException;
 import com.example.logging.Logging;
 import com.example.models.Account;
 import com.example.models.User;
@@ -65,55 +66,63 @@ public class AccountService {
 	
 	public Account deleteAccount(int accountNumber) {
 		Account a = aDao.getAccountByAccountNumber(accountNumber);
+		try {
+			aDao.deleteAccount(a);
+			Logging.logger.info("You have successfully closed your account " + a.getAccountNumber());
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new InvalidAccountException();
+		}
+		
+		return a;
+		
+		}
+	
+	
+	
+	
+	//Use for employee to update balance and account number (Double check this method here and in aDao)
+	public Account updateAccount(int accountNumber, double accountBalance) {
+		Account a = new Account(accountNumber, accountBalance);
 		if(a.getAccountNumber()== accountNumber) {
-			Account delete = new Account(accountNumber);
-			aDao.deleteAccount(delete);
-			System.out.println("Your account has been deactivated. Good Bye");
-		}else {
-			System.out.println("Invalid account number was provided");
+			try {
+				aDao.updateAccount(a);
+				Logging.logger.info("You have successfully updated the account number:\nThe new account number is " + a.getAccountNumber()+" The new account balance is now: "+a.getAccountBalance());
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+				throw new InvalidAccountException();
+			}
+		
 		}
 		return a;
-	
 		}
 	
-	public Account updateAccount(int accountNumber , double accountBalance) {
-		Account a= aDao.getAccountByAccountNumber(accountNumber);
-		if(a.getAccountNumber()== accountNumber) {
-			Account updateAccountNumber = new Account(accountNumber);
-			aDao.updateAccount(updateAccountNumber);
-			System.out.println("You have successfully updated your account number to "+ updateAccountNumber);
-		}else if(a.getAccountNumber() == accountNumber) {
-			Account updateAccountBalance = new Account(accountBalance);
-			aDao.updateAccount(updateAccountBalance);
-		}
-		else {
-			System.out.println("Invalid account number was provided");
-		}
-		return a;
-		}
+	
+public Account withdrawAmount(Account a, double withdrawAmount) {
+        
+        double amt = a.getAccountBalance();
+        System.out.println("Old Account Balance =" + amt);
+        if(amt >= withdrawAmount) {
+            double amt2 = a.getAccountBalance() - withdrawAmount;
+            Account withdraw = new Account(a.getAccountId(),a.getCustomerId(),a.getAccountNumber(),amt2);
+            System.out.println(withdraw);
+            aDao.withdrawUserAmount(withdraw);
+            System.out.println("New Account Balance =" + amt2);
+            System.out.println("The amount you withdrew is$ " + withdrawAmount );
+            return withdraw;
+            
+        }else {
+            System.out.println("You are not able to withdraw the current amount");
+        }
+        return null;
+        
+    }
 
-	
-	
-	public Account withdrawAmount(Account a, double withdrawAmount) {
-		
-		double amt = a.getAccountBalance();
-		if(withdrawAmount <= amt) {
-			double amt2 = a.getAccountBalance() - withdrawAmount;
-			Account withdraw = new Account(a.getAccountNumber(),amt2);
-			aDao.withdrawUserAmount(withdraw);
-			System.out.println("Your new balance $ " + withdrawAmount );
-			return withdraw;
-			
-		}else {
-			System.out.println("You are not able to withdraw the current amount");
-		}
-		return null;
-		
-	}
 	
 	public Account addDepositAmount(Account a, double depositAmount) {
 		double balance = a.getAccountBalance() + depositAmount;
-		Account deposit = new Account(a.getAccountNumber(),balance);
+		Account deposit = new Account(a.getAccountId(),a.getCustomerId(),a.getAccountNumber(),balance);
 		aDao.depositUserAmount(deposit);
 		System.out.println("Your new balance $ " + balance );
 		return deposit;
@@ -132,6 +141,7 @@ public class AccountService {
 		}
 		return null;
 	}
+
 	
 
 }

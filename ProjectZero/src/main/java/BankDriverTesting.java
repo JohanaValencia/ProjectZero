@@ -68,14 +68,44 @@ public static void main(String[] args)  {
 	
 	//Account a= aDao.getAccountByAccountNumber(379449119);
 	
-	//a.setAccountBalance(1500000000.00);
+	//a.setAccountNumber(123456789);
 	
 	//aDao.updateAccount(a);
 	
-	//System.out.println(aDao.getAccountByAccountNumber(379449119));
+	//System.out.println(aDao.getAccountByAccountNumber(123456789));
 	
 	//System.out.println(aDao.getAllAccounts());
 //-------------------------------------------------------------------
+	
+	
+	System.out.println( aDao.getAccountByAccountNumber(123456789));
+	
+	Account a= new Account (123456789, 2000.00);
+	
+	aDao.withdrawUserAmount(a);
+	
+	System.out.println(aDao.getAccountByAccountNumber(123456789));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 	if(login) {
 					System.out.println("Please Select from the following options");
@@ -104,7 +134,9 @@ public static void main(String[] args)  {
 	//Account b = aServ.createAccount(8, 500.00);
 	//Account a = new Account()
 	
-	System.out.println(uDao.getUserByUsername("maggiemag4743"));
+	
+	
+	
 
 	
 }
